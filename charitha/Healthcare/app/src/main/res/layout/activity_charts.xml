@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toTopOf="parent"
+    android:orientation="vertical"
+    tools:context=".Charts">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0E66B9"
+        app:tabTextColor="#fff">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabBarChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bar Chart"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabPieChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pie Chart"/>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabOtherChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dr Chart"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerChart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+</LinearLayout>

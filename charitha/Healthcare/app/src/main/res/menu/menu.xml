@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboard"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/addDetails"
+            android:icon="@drawable/ic_add_box_black_24dp"
+            android:title="Add Details" />
+        <item
+            android:id="@+id/update"
+            android:icon="@drawable/ic_update_black_24dp"
+            android:title="Update" />
+        <item
+            android:id="@+id/promo_code"
+
+            android:title="Promo-codes" />
+        <item
+            android:id="@+id/orders"
+
+            android:title="Orders" />
+    </group>
+    <item
+        android:id="@+id/setting"
+        android:title="Setting">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/stnDelete"
+                    android:title="Delete">
+
+                </item>
+            </group>
+        </menu>
+    </item>
+
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_transfer_within_a_station_black_24dp"
+        android:title="Logout" />
+</group>
+
+</menu>
