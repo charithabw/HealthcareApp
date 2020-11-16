@@ -1,3 +1,4 @@
+//this is updating information
 package com.example.healthcare;
 
 import androidx.annotation.NonNull;
@@ -103,15 +104,16 @@ public class UpdateInfo extends AppCompatActivity implements AdapterView.OnItemS
         profileImage.setImageBitmap(bitmap);
         sideBarProfileImage.setImageBitmap(bitmap);
 
+        //set username
         if(cursor.getCount() == 0){
             Toast.makeText(this, "Not accont", Toast.LENGTH_SHORT).show();
         }
         else{
             while (cursor.moveToNext()){
                 String name2 = (cursor.getString(1));
-                String password2 = (cursor.getString(3));
+//                String password2 = (cursor.getString(3));
                 username.setText(name2);
-                password.setText(password2);
+//                password.setText(password2);
             }
 
             cursor.close();
@@ -146,8 +148,8 @@ public class UpdateInfo extends AppCompatActivity implements AdapterView.OnItemS
                     if(pwd.equals(rPwd)){
 //                        Boolean checkUser = db.checkUsername(name);
 
-                            Boolean isUpdate = db.updateInfo(name, blood, pwd);
-                            Boolean isUpdateProfileImage = db.updateProfileImage(name, new ImageModel(bitmap, name));
+                            Boolean isUpdate = db.updateInfo(name, blood, pwd);//call DB class
+                            Boolean isUpdateProfileImage = db.updateProfileImage(name, new ImageModel(bitmap, name));//updating new proPic
 
                             if(isUpdate == true && isUpdateProfileImage == true){
                                 Toast.makeText(UpdateInfo.this, "update successefuly", Toast.LENGTH_SHORT).show();

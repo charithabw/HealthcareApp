@@ -1,3 +1,4 @@
+//all the session manage by this class
 package com.example.healthcare;
 
 import android.content.Context;

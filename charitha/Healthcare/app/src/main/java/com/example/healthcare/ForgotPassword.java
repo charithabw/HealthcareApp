@@ -1,3 +1,5 @@
+//forgot password UI
+//this will appear only user enter wrong user name or password
 package com.example.healthcare;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +42,7 @@ public class ForgotPassword extends AppCompatActivity {
         username.setText(name);
 
 
+        //after user enter new password and re-password
         conform.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,40 +50,37 @@ public class ForgotPassword extends AppCompatActivity {
                 String pwd = password.getText().toString();
                 String rPwd = rePassword.getText().toString();
 
-                if(name.equals("") || pwd.equals("") || rPwd.equals("")){
-                    Toast.makeText(ForgotPassword.this, "Please Enter PW!!! ",Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if (name.equals("") || pwd.equals("") || rPwd.equals("")) {
+                    Toast.makeText(ForgotPassword.this, "Please Enter PW!!! ", Toast.LENGTH_SHORT).show();
+                } else {
                     //check password and confirm password
-                    if(pwd.equals(rPwd)){
+                    if (pwd.equals(rPwd)) {
                         Boolean checkUser = db.checkUsername(name);
-                        if(checkUser == true){
+                        if (checkUser == true) {
                             boolean isUpdatePassword = db.updatePassword(name, pwd);
-                            if(isUpdatePassword == true){
+                            if (isUpdatePassword == true) {
                                 progressLoading();
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                SessionManagment sessionManagment = new SessionManagment(ForgotPassword.this);
-                                User user = new User(name);
-                                sessionManagment.setSession(user);
-                                Toast.makeText(ForgotPassword.this, "Update password successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ForgotPassword.this, Dashboard.class);
-                                intent.putExtra("USERNAME", name);
-                                startActivity(intent);
+                                        //create a session for user
+                                        SessionManagment sessionManagment = new SessionManagment(ForgotPassword.this);
+                                        User user = new User(name);
+                                        sessionManagment.setSession(user);
+                                        Toast.makeText(ForgotPassword.this, "Update password successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(ForgotPassword.this, Dashboard.class);
+                                        intent.putExtra("USERNAME", name);
+                                        startActivity(intent);
                                     }
                                 }, 2500);
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(ForgotPassword.this, "Error in changing password", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else{
+                        } else {
                             Toast.makeText(ForgotPassword.this, "User name already exist!!!", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(ForgotPassword.this, "Password Not match !!!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -88,7 +88,8 @@ public class ForgotPassword extends AppCompatActivity {
         });
 
     }
-    public void progressLoading(){
+
+    public void progressLoading() {
         progressBarDialog.startLoadingDialog();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -98,22 +99,22 @@ public class ForgotPassword extends AppCompatActivity {
             }
         }, 3000);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         SessionManagment sessionManagment = new SessionManagment(ForgotPassword.this);
         boolean isLoged = sessionManagment.checkLogin();
 
-        if(isLoged){
+        if (isLoged) {
             HashMap<String, String> sessionDetails = sessionManagment.getSession();
             name = sessionDetails.get(SessionManagment.SESSION_KEY);
 
             Intent intent = new Intent(ForgotPassword.this, Dashboard.class);//go to next activity
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("USERNAME",name);//go to next activity with username as attribute
+            intent.putExtra("USERNAME", name);//go to next activity with username as attribute
             startActivity(intent);
-        }
-        else {
+        } else {
 
         }
     }

@@ -13,13 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity android:name=".Charts" />
         <activity android:name=".AddInfomation" />
         <activity android:name=".UpdateInfo" />
         <activity android:name=".Dashboard" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".SplashWindow">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

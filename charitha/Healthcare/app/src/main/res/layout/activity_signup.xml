@@ -57,18 +57,27 @@
         app:civ_border_width="2dp"
        android:layout_gravity="center"
         />
-    <EditText
-        android:id="@+id/edtSInUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Username"
-        android:layout_marginTop="65dp"
-        android:padding="16dp"
-        android:drawableLeft="@drawable/ic_person_outline_black_24dp"
-        android:drawablePadding="20dp"
-        android:drawableTint="#0099ff"
-        android:background="@drawable/logintextround"
-        android:layout_below="@+id/profile_image"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#B9B8B8"
+            android:hint="Username"
+            app:hintTextColor="@color/black_overlay"
+            app:startIconDrawable="@drawable/ic_person_outline_black_24dp"
+            app:startIconTint="@color/colorLoginMain"
+            app:endIconMode="clear_text">
+
+            <EditText
+                android:id="@+id/edtSInUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:layout_marginTop="65dp"
+                android:padding="16dp"
+                android:background="@drawable/logintextround"
+                android:layout_below="@+id/profile_image"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,30 +99,51 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:layout_below="@+id/edtSInUsername"/>
-    <EditText
-        android:id="@+id/edtSInPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:layout_marginTop="50dp"
-        android:padding="16dp"
-        android:drawableLeft="@drawable/ic_lock_open_black_24dp"
-        android:drawablePadding="20dp"
-        android:drawableTint="#0099ff"
-        android:background="@drawable/logintextround"
-        android:layout_below="@+id/drpSInBloodGroup"/>
-    <EditText
-        android:id="@+id/edtSInRePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Re-Password"
-        android:layout_marginTop="50dp"
-        android:padding="16dp"
-        android:drawableLeft="@drawable/ic_lock_open_black_24dp"
-        android:drawablePadding="20dp"
-        android:drawableTint="#0099ff"
-        android:background="@drawable/logintextround"
-        android:layout_below="@+id/edtSInPassword"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#B9B8B8"
+            android:hint="Password"
+            app:hintTextColor="@color/black_overlay"
+            app:startIconDrawable="@drawable/ic_lock_open_black_24dp"
+            app:startIconTint="@color/colorLoginMain"
+            app:endIconMode="password_toggle">
+
+            <EditText
+                android:id="@+id/edtSInPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:layout_marginTop="50dp"
+                android:padding="16dp"
+                android:background="@drawable/logintextround"
+                android:layout_below="@+id/drpSInBloodGroup"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#B9B8B8"
+            android:hint="Re-Password"
+            app:hintTextColor="@color/black_overlay"
+            app:startIconDrawable="@drawable/ic_lock_open_black_24dp"
+            app:startIconTint="@color/colorLoginMain"
+            app:endIconMode="password_toggle">
+
+
+            <EditText
+                android:id="@+id/edtSInRePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:background="@drawable/logintextround"
+                android:layout_below="@+id/edtSInPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/btnSInSignup"
         android:layout_width="match_parent"

@@ -1,3 +1,5 @@
+//this is dashboard
+//after login or sign up goes to this UI
 package com.example.healthcare;
 
 import androidx.annotation.NonNull;
@@ -40,7 +42,7 @@ public class Dashboard extends AppCompatActivity {
 
     private static String name;
     TextView username, password;
-//    Button update, addInformations, viewChart;
+    //    Button update, addInformations, viewChart;
     RVAdapder rvAdapder;
     CircleImageView profilePic;
     ArrayList<ImageModel> imageModels;
@@ -89,16 +91,16 @@ public class Dashboard extends AppCompatActivity {
         name = intent.getStringExtra("USERNAME");
 
 
-        drawerLayout=findViewById(R.id.drawer);
-        toolbar=findViewById(R.id.toolBar);
+        drawerLayout = findViewById(R.id.drawer);
+        toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-        toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView=findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         hView = navigationView.getHeaderView(0);
-        sideBarName = (TextView)hView.findViewById(R.id.nameSideBar);
-        sideBarProfileImage = (ImageView)hView.findViewById(R.id.profileImageSideBar);
+        sideBarName = (TextView) hView.findViewById(R.id.nameSideBar);
+        sideBarProfileImage = (ImageView) hView.findViewById(R.id.profileImageSideBar);
 
 
         sideBarName.setText(name);
@@ -107,20 +109,17 @@ public class Dashboard extends AppCompatActivity {
         progressBarDialog = new ActivityLoadingPeogressBarDialog(Dashboard.this);
 
 
-
-
         Cursor cursor = db.getDetails(name);//get data form db with specific username
 
-        if(cursor.getCount() == 0){
+        if (cursor.getCount() == 0) {
             Toast.makeText(this, "Not accont", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            while (cursor.moveToNext()){//check the cursor one by one
-                 String name2 = (cursor.getString(1));
-                 String blood2 = (cursor.getString(2));
-                 //set username and blood group in the UI
-                 username.setText(name2);
-                 password.setText(blood2);
+        } else {
+            while (cursor.moveToNext()) {//check the cursor one by one
+                String name2 = (cursor.getString(1));
+                String blood2 = (cursor.getString(2));
+                //set username and blood group in the UI
+                username.setText(name2);
+                password.setText(blood2);
             }
 
             cursor.close();
@@ -149,22 +148,20 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-       imageModels = db.getProfileImage(name);
-       ImageModel model = imageModels.get(0);
-       Bitmap bitmap = model.getImage();
-       profilePic.setImageBitmap(bitmap);
-       sideBarProfileImage.setImageBitmap(bitmap);
+        imageModels = db.getProfileImage(name);
+        ImageModel model = imageModels.get(0);
+        Bitmap bitmap = model.getImage();
+        profilePic.setImageBitmap(bitmap);
+        sideBarProfileImage.setImageBitmap(bitmap);
 
 
-
-
+        //side bar
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-               int id =menuItem.getItemId();
+                int id = menuItem.getItemId();
 
-                switch (id)
-                {
+                switch (id) {
                     case R.id.dashboard:
                         reDerectTo(Dashboard.this, Dashboard.class);
                         break;
@@ -205,15 +202,17 @@ public class Dashboard extends AppCompatActivity {
         });
     }
 
-    public static void reDerectTo(Activity activity, Class aClass){
+    //rederecting function for side bar
+    public static void reDerectTo(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("USERNAME", name);
         activity.startActivity(intent);
     }
 
-    public void logout(){
-
+    //logout function
+    public void logout() {
+        //create alert dialog for asking logout or not
         builder.setMessage("Do you want to logout ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -223,16 +222,16 @@ public class Dashboard extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                        SessionManagment sessionManagment = new SessionManagment(Dashboard.this);
-                        sessionManagment.removeSession();
+                                SessionManagment sessionManagment = new SessionManagment(Dashboard.this);
+                                sessionManagment.removeSession();
 
-                        Intent intent = new Intent(Dashboard.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+                                Intent intent = new Intent(Dashboard.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
                             }
-                        }, 2500);
-                            }
+                        }, 3000);
+                    }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -249,7 +248,8 @@ public class Dashboard extends AppCompatActivity {
 
     }
 
-    public void deletePopup(){
+    //account delete function
+    public void deletePopup() {
         builder.setMessage("Do you want to delete this account ?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -288,7 +288,9 @@ public class Dashboard extends AppCompatActivity {
 
 
     }
-    public void progressLoading(){
+
+    //loading effect
+    public void progressLoading() {
         progressBarDialog.startLoadingDialog();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

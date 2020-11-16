@@ -9,8 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -58,7 +61,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     //inserting data
     public boolean insertData( String username, String blood, String password){
+
         SQLiteDatabase db = this.getWritableDatabase();
+        password = md5(password);
+        Log.d("yyy", password);
         ContentValues values = new ContentValues();
 
         //insert data
@@ -89,6 +95,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     //check username and the password with stored data
     public boolean checkUsernamePasswrod(String username, String passsword){
+        passsword = md5(passsword);
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from " + UserMaster.Users.TABLE_NAME + " where " +
                 UserMaster.Users.COLUMN_NAME_USERNAME + " =? and " + UserMaster.Users.COLUMN_NAME_PASSWORD +
@@ -119,6 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     //uodate users table data
     public boolean updateInfo(String name, String blood, String password){
+        password = md5(password);
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
 
@@ -144,6 +152,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
     public boolean updatePassword(String name, String password){
+//        String md5Password = md5(password);
+        password = md5(password);
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
 
@@ -313,4 +323,25 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
+    //password hashing function
+    public String md5(String s) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0; i<messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

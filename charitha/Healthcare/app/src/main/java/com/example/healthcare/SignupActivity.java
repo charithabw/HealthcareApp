@@ -1,3 +1,4 @@
+//this is signup activity
 package com.example.healthcare;
 
 import androidx.annotation.Nullable;
@@ -52,9 +53,8 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
     DBHelper db;
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         db = new DBHelper(this);
@@ -84,17 +84,16 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
                 String pwd = password.getText().toString();
                 String rPwd = rePassword.getText().toString();
 
-                if(name.equals("") || pwd.equals("") || rPwd.equals("")){
-                    Toast.makeText(SignupActivity.this, "Please Enter UN & PW!!! ",Toast.LENGTH_SHORT).show();
-                }
-                else{
+                if (name.equals("") || pwd.equals("") || rPwd.equals("")) {
+                    Toast.makeText(SignupActivity.this, "Please Enter UN & PW!!! ", Toast.LENGTH_SHORT).show();
+                } else {
                     //check password and confirm password
-                    if(pwd.equals(rPwd)){
+                    if (pwd.equals(rPwd)) {
                         Boolean checkUser = db.checkUsername(name);
-                        if(checkUser == false && bitmap != null){
+                        if (checkUser == false && bitmap != null) {
                             Boolean isInsert = db.insertData(name, blood, pwd);//inserting data to db
-                            boolean isInsertProfileImg = db.storeProfileImage(name ,new ImageModel(bitmap, name));
-                            if(isInsert == true && isInsertProfileImg == true){
+                            boolean isInsertProfileImg = db.storeProfileImage(name, new ImageModel(bitmap, name));
+                            if (isInsert == true && isInsertProfileImg == true) {
                                 progressLoading();
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
@@ -110,22 +109,18 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
                                     }
                                 }, 2500);
 //                                Toast.makeText(SignupActivity.this, "signUp successfully", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(SignupActivity.this, "Error in signUp", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else{
+                        } else {
                             Toast.makeText(SignupActivity.this, "User name already exist!!!", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(SignupActivity.this, "Password Not match !!!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-
 
 
         profilePic.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +132,8 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
         });
 
     }
-    public void progressLoading(){
+
+    public void progressLoading() {
         progressBarDialog.startLoadingDialog();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -147,11 +143,12 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
             }
         }, 3000);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GALLRY_REQUEST_CODE){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == GALLRY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(uri);
@@ -164,6 +161,7 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
         }
     }
 
+    //convert URI to bitmap
     public static Bitmap decodeUriToBitmap(Context mContext, Uri sendUri) {
         Bitmap getBitmap = null;
         try {
@@ -189,8 +187,8 @@ public class SignupActivity extends AppCompatActivity implements AdapterView.OnI
     //dropdown method
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if(adapterView.getId() == R.id.drpSInBloodGroup){
-             blood = adapterView.getItemAtPosition(i).toString();
+        if (adapterView.getId() == R.id.drpSInBloodGroup) {
+            blood = adapterView.getItemAtPosition(i).toString();
             //Toast.makeText(this, bloodValue, Toast.LENGTH_SHORT).show();
         }
     }

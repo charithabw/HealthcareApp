@@ -16,11 +16,11 @@
         <item
             android:id="@+id/promo_code"
 
-            android:title="Promo-codes" />
+            android:title="-" />
         <item
             android:id="@+id/orders"
 
-            android:title="Orders" />
+            android:title="-" />
     </group>
     <item
         android:id="@+id/setting"
@@ -28,6 +28,7 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
+                    android:icon="@drawable/ic_delete_forever_black_24dp"
                     android:id="@+id/stnDelete"
                     android:title="Delete">
 

@@ -1,3 +1,5 @@
+//this is add information part
+//this UI has camera access
 package com.example.healthcare;
 
 import androidx.annotation.NonNull;
@@ -85,16 +87,16 @@ public class AddInfomation extends AppCompatActivity {
         final Intent intent = getIntent();
         name = intent.getStringExtra("USERNAME");
 
-        drawerLayout=findViewById(R.id.drawer);
-        toolbar=findViewById(R.id.toolBar);
+        drawerLayout = findViewById(R.id.drawer);
+        toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
-        toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        navigationView=findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         hView = navigationView.getHeaderView(0);
-        sideBarName = (TextView)hView.findViewById(R.id.nameSideBar);
-        sideBarProfileImage = (ImageView)hView.findViewById(R.id.profileImageSideBar);
+        sideBarName = (TextView) hView.findViewById(R.id.nameSideBar);
+        sideBarProfileImage = (ImageView) hView.findViewById(R.id.profileImageSideBar);
         sideBarName.setText(name);
 
         imageModels = db.getProfileImage(name);
@@ -102,28 +104,29 @@ public class AddInfomation extends AppCompatActivity {
         Bitmap bitmap2 = model2.getImage();
         sideBarProfileImage.setImageBitmap(bitmap2);
 
+        //image saving in DB
         saveImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!name.isEmpty() && uploadImage.getDrawable() != null && bitmap != null){
-                    boolean isInsert = db.storeImage(name ,new ImageModel(bitmap, name));
-                    if(isInsert){
+                if (!name.isEmpty() && uploadImage.getDrawable() != null && bitmap != null) {
+                    boolean isInsert = db.storeImage(name, new ImageModel(bitmap, name));//call DB class
+                    if (isInsert) {
                         Toast.makeText(AddInfomation.this, "image uploaded succesfuly", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(AddInfomation.this, "Uploding Error...", Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        Toast.makeText(AddInfomation.this, "Uploding Error...",Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
+                } else {
                     Toast.makeText(AddInfomation.this, "image not found", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        //view all taken images for particular user
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 rvAdapder = new RVAdapder(AddInfomation.this, db.getImage(name));//set adapter for the RecyclerView (to check uploaded image)
-                if(rvAdapder != null){
+                if (rvAdapder != null) {
                     Toast.makeText(AddInfomation.this, "....", Toast.LENGTH_SHORT).show();
                     imageRV.setHasFixedSize(true);
                     imageRV.setAdapter(rvAdapder);
@@ -131,21 +134,20 @@ public class AddInfomation extends AppCompatActivity {
 
 //                    imageRV.setAdapter(rvAdapder);
 
-                }
-                else{
+                } else {
                     Toast.makeText(AddInfomation.this, "Error in image", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
+        //side bar actions
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                int id=menuItem.getItemId();
+                int id = menuItem.getItemId();
 
-                switch (id)
-                {
+                switch (id) {
                     case R.id.dashboard:
                         reDerectTo(AddInfomation.this, Dashboard.class);
                         break;
@@ -175,29 +177,30 @@ public class AddInfomation extends AppCompatActivity {
         });
 
     }
-    public static void reDerectTo(Activity activity, Class aClass){
+
+    //calling other pages within side bar
+    public static void reDerectTo(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("USERNAME", name);
         activity.startActivity(intent);
     }
+
     //ask camera permision to open camera
-    public void askCameraPermiton(){
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
-        }
-        else {
+    public void askCameraPermiton() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+        } else {
             dispatchTakePictureIntent();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == CAMERA_PERM_CODE){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == CAMERA_PERM_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Camera permission is requered!!!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -212,16 +215,16 @@ public class AddInfomation extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_REQUEST_CODE) {
-           if(resultCode == Activity.RESULT_OK){
-               File f = new File(currentPhotoPath);
-               uploadImage.setImageURI(Uri.fromFile(f));//set imageView with captured photo
-               setPic();
-           }
+            if (resultCode == Activity.RESULT_OK) {
+                File f = new File(currentPhotoPath);
+                uploadImage.setImageURI(Uri.fromFile(f));//set imageView with captured photo
+                setPic();
+            }
         }
 
     }
 
-
+    //create taken image in phone memory
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -237,8 +240,9 @@ public class AddInfomation extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
-   // static final int REQUEST_TAKE_PHOTO = 1;
+    // static final int REQUEST_TAKE_PHOTO = 1;
 
+    //open camera function
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -261,6 +265,8 @@ public class AddInfomation extends AppCompatActivity {
             }
         }
     }
+
+    //set taken image in imageView
     private void setPic() {
         // Get the dimensions of the View
         int targetW = uploadImage.getWidth();
@@ -276,7 +282,7 @@ public class AddInfomation extends AppCompatActivity {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.max(1, Math.min(photoW/targetW, photoH/targetH));
+        int scaleFactor = Math.max(1, Math.min(photoW / targetW, photoH / targetH));
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
@@ -287,7 +293,8 @@ public class AddInfomation extends AppCompatActivity {
         uploadImage.setImageBitmap(bitmap);
     }
 
-    public void logout(){
+    //logout function
+    public void logout() {
         SessionManagment sessionManagment = new SessionManagment(AddInfomation.this);
         sessionManagment.removeSession();
 

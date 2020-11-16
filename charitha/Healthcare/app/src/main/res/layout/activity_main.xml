@@ -48,31 +48,59 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="10dp">
-    <EditText
-        android:id="@+id/edtUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="User Name"
-        android:padding="16dp"
-        android:drawableLeft="@drawable/ic_person_outline_black_24dp"
-        android:drawablePadding="20dp"
-        android:drawableTint="@color/colorLoginMain"
-        android:background="@drawable/logintextround"
-        android:layout_below="@+id/view2"
-        android:layout_marginTop="50dp"/>
-    <EditText
-        android:id="@+id/edtPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:padding="16dp"
-        android:drawableLeft="@drawable/ic_lock_open_black_24dp"
-        android:drawablePadding="20dp"
-        android:drawableTint="@color/colorLoginMain"
-        android:background="@drawable/logintextround"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/edtUsername"/>
-    <TextView
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#B9B8B8"
+            app:hintTextColor="@color/black_overlay"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black_overlay"
+            android:hint="User Name"
+            app:startIconDrawable="@drawable/ic_person_outline_black_24dp"
+            app:startIconTint="@color/colorLoginMain"
+           >
+
+            <EditText
+                android:id="@+id/edtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:padding="16dp"
+                android:background="@drawable/logintextround"
+                android:layout_below="@+id/view2"
+                android:layout_marginTop="50dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#B9B8B8"
+            app:hintTextColor="@color/black_overlay"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black_overlay"
+            android:hint="Password"
+            app:startIconDrawable="@drawable/ic_lock_open_black_24dp"
+            app:startIconTint="@color/colorLoginMain"
+            >
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:background="@drawable/logintextround"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/edtUsername"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
         android:id="@+id/txtLoginForgotPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

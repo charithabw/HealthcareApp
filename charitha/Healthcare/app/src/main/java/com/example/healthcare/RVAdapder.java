@@ -51,9 +51,6 @@ public class RVAdapder extends RecyclerView.Adapter<RVAdapder.RVBuilder> {
     @Override
     public int getItemCount() {
         return imageModels.size();
-
-
-
     }
 
     public static class RVBuilder extends RecyclerView.ViewHolder{
