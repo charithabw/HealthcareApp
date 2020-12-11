@@ -33,6 +33,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.DataOutput;
@@ -49,7 +55,7 @@ public class AddInfomation extends AppCompatActivity {
     String currentPhotoPath;
     public static String name;
     ImageView uploadImage;
-    Button camera, saveImg, imageView;
+    Button camera, saveImg, imageView, apiButton;
     Bitmap bitmap;
     RecyclerView imageRV;
     DBHelper db;
@@ -74,6 +80,7 @@ public class AddInfomation extends AppCompatActivity {
         saveImg = (Button) findViewById(R.id.btnSaveImg);
         imageRV = (RecyclerView) findViewById(R.id.rvImageView);
         imageView = (Button) findViewById(R.id.btnViewImg);
+        apiButton = (Button) findViewById(R.id.btnApi);
 
 //        a1 = getResources().getStringArray(R.array.bloodGroup);
         camera.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +180,36 @@ public class AddInfomation extends AppCompatActivity {
                         return true;
                 }
                 return true;
+            }
+        });
+
+        apiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                // Instantiate the RequestQueue.
+                RequestQueue queue = Volley.newRequestQueue(AddInfomation.this);
+                String url = "http://healthcareapp.pythonanywhere.com/disease/skin/test";
+
+                // Request a string response from the provided URL.
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                // Display the first 500 characters of the response string.
+                                Toast.makeText(AddInfomation.this, "Response is: " + response.substring(0, 500), Toast.LENGTH_SHORT).show();
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AddInfomation.this, "That didn't work!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+
             }
         });
 

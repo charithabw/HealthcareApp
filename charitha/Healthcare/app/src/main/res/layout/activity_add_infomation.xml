@@ -58,12 +58,18 @@
         android:layout_height="wrap_content"
         android:text="View"
         android:layout_below="@+id/btnSaveImg"/>
+        <Button
+            android:id="@+id/btnApi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View"
+            android:layout_below="@+id/btnViewImg"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnViewImg"/>
+        android:layout_below="@+id/btnApi"/>
     </RelativeLayout>
     </ScrollView>
 
